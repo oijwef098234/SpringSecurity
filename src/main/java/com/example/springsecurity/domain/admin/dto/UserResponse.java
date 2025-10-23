@@ -1,4 +1,4 @@
-package com.example.springsecurity.admin.dto;
+package com.example.springsecurity.domain.admin.dto;
 
 import com.example.springsecurity.user.entity.User;
 import lombok.Builder;

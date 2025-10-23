@@ -1,7 +1,7 @@
-package com.example.springsecurity.admin.controller;
+package com.example.springsecurity.domain.admin.controller;
 
-import com.example.springsecurity.admin.dto.UserResponse;
-import com.example.springsecurity.admin.service.ReadAllUserListService;
+import com.example.springsecurity.domain.admin.dto.UserResponse;
+import com.example.springsecurity.domain.admin.service.ReadAllUserListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.example.springsecurity.admin.entity;
+package com.example.springsecurity.domain.admin.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

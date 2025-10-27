@@ -13,7 +13,10 @@ jwt:
   secret: "CHANGE-THIS-TO-A-VERY-LONG-RANDOM-SECRET-KEY-AT-LEAST-64-BYTES"
   access-exp-min: 60     # 60분
   header: Authorization
-  prefix: "Bearer "
+  prefix: "Bearer"
+redis:
+  host: ${REDIS_HOST}
+  port: ${REDIS_PORT}
 logging:
   level:
     org.hibernate.SQL: debug

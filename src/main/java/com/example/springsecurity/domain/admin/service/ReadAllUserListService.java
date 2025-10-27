@@ -1,7 +1,7 @@
 package com.example.springsecurity.domain.admin.service;
 
 import com.example.springsecurity.domain.admin.dto.UserResponse;
-import com.example.springsecurity.user.repository.UserRepository;
+import com.example.springsecurity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

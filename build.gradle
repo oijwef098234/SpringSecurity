@@ -26,6 +26,9 @@ repositories {
 
 // 예시 (버전은 Spring Boot가 관리하거나 직접 명시해야 할 수 있음)
 dependencies {
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     // 핵심
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'

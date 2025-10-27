@@ -30,7 +30,7 @@ public class JwtTokenProvider {
                 .compact(); // 끝
     }
 
-    public String createRefreshToken(String userId) {
+    public String createRefreshToken(String userId) { // 리프레쉬 토큰 발급
         Date now = new Date();
 
         String refreshToken = Jwts.builder()
@@ -51,11 +51,11 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) { // 토큰 형식확인, 토큰 추출
-        String bearerToken = request.getHeader(jwtProperties.getHeader());
+        String bearerToken = request.getHeader(jwtProperties.getHeader()); // 여기서 토큰 받아오기
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getPrefix())
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getPrefix()) // 여기서 형식 검증
                 && bearerToken.length() > jwtProperties.getPrefix().length() + 1) {
-            return bearerToken.substring(7);
+            return bearerToken.substring(7); // 여기서 뒤에 7자리 부터 뽑아서 내보내기
         }
 
         return null;

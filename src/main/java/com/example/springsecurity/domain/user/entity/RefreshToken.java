@@ -1,22 +1,21 @@
 package com.example.springsecurity.domain.user.entity;
 
-import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
-@RedisHash("refresh_tokens")   // Redis key-space 이름
+@RedisHash
 @Getter @Builder
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class RefreshToken {
 
     @Id
-    private String id;
+    private String userId;
 
     @Indexed
-    private String subject;
-
     private String token;
 
     @TimeToLive

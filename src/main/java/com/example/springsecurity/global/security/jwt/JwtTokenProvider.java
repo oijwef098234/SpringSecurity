@@ -9,6 +9,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -77,4 +78,9 @@ public class JwtTokenProvider {
         }
     }
 
+    public Authentication getAuthentication(String token) {
+        Claims claims = getClaim(token);
+
+
+    }
 }

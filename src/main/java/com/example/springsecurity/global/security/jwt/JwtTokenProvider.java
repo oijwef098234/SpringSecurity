@@ -9,7 +9,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -73,14 +72,10 @@ public class JwtTokenProvider {
         catch (ExpiredTokenException expiredTokenException){ // 만료된 토큰
             throw ExpiredTokenException.EXCEPTION;
         }
-        catch (Exception e){ // 검증되지 않은 토큰, 이거 본적 없긴 함
+        catch (Exception e){ // 검증되지 않은 토큰
             throw InvalidTokenException.EXCEPTION;
         }
     }
 
-    public Authentication getAuthentication(String token) {
-        Claims claims = getClaim(token);
 
-
-    }
 }

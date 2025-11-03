@@ -17,10 +17,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
+@Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
@@ -87,7 +89,7 @@ public class JwtTokenProvider {
         }
     }
 
-    public TokenResponse receiveToken(String username) { //
+    public TokenResponse receiveToken(String username) { // 사용자 이름으로 토큰을 발급함
         Date now = new Date();
 
         User user = userRepository.findByUsername(username)

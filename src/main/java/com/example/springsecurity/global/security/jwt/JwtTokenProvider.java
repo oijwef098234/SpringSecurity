@@ -1,14 +1,22 @@
 package com.example.springsecurity.global.security.jwt;
 
+import com.example.springsecurity.domain.user.dto.TokenResponse;
 import com.example.springsecurity.domain.user.entity.RefreshToken;
+import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.exception.ExpiredTokenException;
 import com.example.springsecurity.domain.user.exception.InvalidTokenException;
 import com.example.springsecurity.domain.user.repository.RefreshTokenRepository;
+import com.example.springsecurity.domain.user.repository.UserRepository;
+import com.example.springsecurity.global.security.auth.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -17,12 +25,14 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public String createAccessToken(String userId) {
+    public String createAccessToken(String username) {
         Date now = new Date(); // 현재 시간 기준으로 앞으로의 이 토큰이 얼마나 유효한지 알기 위해
 
         return Jwts.builder()
-                .setSubject(userId) // 해당 토큰 소유주
+                .setSubject(username) // 해당 토큰 소유주
                 .claim("type", "access") // 해당 토큰 타입
                 .setIssuedAt(now) // 해당 토큰 생성 시간
                 .setExpiration(new Date(now.getTime() + jwtProperties.getAccessExpiration() * 1000)) // 해당 토큰 만료기한 설정
@@ -30,7 +40,7 @@ public class JwtTokenProvider {
                 .compact(); // 끝
     }
 
-    public String createRefreshToken(String userId) { // 리프레쉬 토큰 발급
+    public String createRefreshToken(String username) { // 리프레쉬 토큰 발급
         Date now = new Date();
 
         String refreshToken = Jwts.builder()
@@ -42,7 +52,7 @@ public class JwtTokenProvider {
 
                 refreshTokenRepository.save(
                         RefreshToken.builder()
-                                .userId(userId)
+                                .userId(username)
                                 .token(refreshToken)
                                 .build()
                 );
@@ -77,5 +87,24 @@ public class JwtTokenProvider {
         }
     }
 
+    public TokenResponse receiveToken(String username) { //
+        Date now = new Date();
 
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자 계정이 존재하지 않습니다."));
+
+        return TokenResponse
+                .builder()
+                .accessToken(createAccessToken(username))
+                .refreshToken(createRefreshToken(username))
+                .accessExpiredAt(new Date(now.getTime() + jwtProperties.getAccessExpiration()))
+                .refreshExpiredAt(new Date(now.getTime() + jwtProperties.getRefreshExpiration()))
+                .build();
+    }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = getClaim(token);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(claims.getSubject());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
 }

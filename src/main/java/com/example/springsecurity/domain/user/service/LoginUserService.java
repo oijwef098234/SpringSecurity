@@ -6,7 +6,6 @@ import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

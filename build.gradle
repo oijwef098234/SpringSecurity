@@ -45,6 +45,10 @@ dependencies {
 
     // Configuration Properties (선택 사항이지만 유용함)
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // SQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 }
 
 tasks.named('test') {

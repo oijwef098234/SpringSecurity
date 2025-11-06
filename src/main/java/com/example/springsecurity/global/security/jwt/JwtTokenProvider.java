@@ -49,7 +49,7 @@ public class JwtTokenProvider {
                 .claim("type", "refresh")
                 .setIssuedAt(now)
                 .setExpiration(new java.sql.Timestamp(now.getTime() + jwtProperties.getRefreshExpiration() * 1000))
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getHeader())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
                 .compact();
 
                 refreshTokenRepository.save(
@@ -89,7 +89,7 @@ public class JwtTokenProvider {
         }
     }
 
-    public TokenResponse receiveToken(String username) { // 사용자 이름으로 토큰을 발급함
+    public TokenResponse receiveToken(String username) { // 사용자 이름으로 토큰을 발급한다.
         Date now = new Date();
 
         User user = userRepository.findByUsername(username)

@@ -13,7 +13,7 @@ public class AdminLoginService {
     private final AdminRepository adminRepository;
 
     public void login(LoginRequest loginRequest) {
-        Admin admin = adminRepository.findByAdminId(loginRequest.getAdminId()).orElseThrow(
+        Admin admin = adminRepository.findByAdminName(loginRequest.getAdminId()).orElseThrow(
                 () -> AdminNotfoundException.EXCEPTION
         );
     }

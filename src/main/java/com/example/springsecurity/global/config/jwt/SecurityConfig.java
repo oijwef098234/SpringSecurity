@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class SecurityConfig {
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable) // csrf 공격 방어
+                // cors 설정은 프론트엔드가 없기때문에 필요 없음
                 .headers(headers -> headers // 클릭 제킹 공격 방어
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session -> session // 세션 사용 설정
@@ -31,7 +31,4 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")) // 관리자 경로 권한 설정
                 .build();
     }
-
-    @Bean
-
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public class AdminController {
     private final ReadAllUserListService readAllUserListService;
     private final AdminLoginService adminLoginService;
-    private final JwtTokenProvider jwtTokenProvider;
     private final AdminSignUpService adminSignUpService;
 
     @GetMapping("/all")

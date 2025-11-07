@@ -65,9 +65,10 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) { // 토큰 형식확인, 토큰 추출
         String bearerToken = request.getHeader(jwtProperties.getHeader()); // 여기서 토큰 받아오기
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getPrefix()) // 여기서 형식 검증
-                && bearerToken.length() > jwtProperties.getPrefix().length() + 1) {
-            return bearerToken.substring(7); // 여기서 뒤에 7자리 부터 뽑아서 내보내기
+        String prefix = jwtProperties.getPrefix(); // prefix 추출
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(prefix)) {
+            return bearerToken.substring(prefix.length()).trim();
         }
 
         return null;

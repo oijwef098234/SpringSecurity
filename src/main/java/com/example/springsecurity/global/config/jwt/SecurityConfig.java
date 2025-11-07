@@ -1,6 +1,7 @@
 package com.example.springsecurity.global.config.jwt;
 
 import com.example.springsecurity.global.security.jwt.JwtAuthenticationEntryPoint;
+import com.example.springsecurity.global.security.jwt.JwtTokenFilter;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,11 +11,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
@@ -31,6 +34,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")) // 관리자 경로 권한 설정
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .addFilterBefore(
+                        new JwtTokenFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .build();
     }
 }

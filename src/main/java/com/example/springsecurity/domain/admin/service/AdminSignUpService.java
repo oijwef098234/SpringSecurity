@@ -1,27 +1,26 @@
-package com.example.springsecurity.domain.user.service;
+package com.example.springsecurity.domain.admin.service;
 
+import com.example.springsecurity.domain.admin.exception.DuplicatedAdminException;
 import com.example.springsecurity.domain.user.dto.UserRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
-import com.example.springsecurity.domain.user.exception.DuplicatedUserException;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SignUpUserService {
+public class AdminSignUpService {
     private final UserRepository userRepository;
 
-    public void signUpUser(UserRequest userRequest) { // 회원가입
-        if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) { // 사용자가 중복인지 확인
-            throw DuplicatedUserException.EXCEPTION;
+    public void signUp(UserRequest userRequest) {
+        if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
+            throw DuplicatedAdminException.EXCEPTION;
         }
-
-        User user = User.builder() // 사용자 생성
+        User user  = User.builder()
                 .username(userRequest.getUsername())
                 .password(userRequest.getPassword())
-                .role(Roles.USER)
+                .role(Roles.ADMIN)
                 .build();
         userRepository.save(user);
     }

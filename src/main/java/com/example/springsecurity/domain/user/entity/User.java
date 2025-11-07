@@ -1,10 +1,7 @@
 package com.example.springsecurity.domain.user.entity;
 
 import com.example.springsecurity.domain.user.entity.enums.Roles;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,9 +18,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Roles role;
 
     private boolean isEnabled;
@@ -33,8 +33,4 @@ public class User {
     private boolean isExpired;
 
     private boolean isCredentialsExpired;
-
-    public void lockAccount() {
-        this.isLocked = true;
-    }
 }

@@ -11,9 +11,10 @@ import lombok.Getter;
 public enum ErrorCode {
     // admin
     ADMIN_NOT_FOUND(404, "관리자 계정을 찾을 수 없습니다."),
+    ADMIN_DUPLICATE(409, "이미 존재하는 관리자입니다."),
 
     //user
-    USER_DUPLICATE(404, "이미 존재하는 사용자입니다."),
+    USER_DUPLICATE(409, "이미 존재하는 사용자입니다."),
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),

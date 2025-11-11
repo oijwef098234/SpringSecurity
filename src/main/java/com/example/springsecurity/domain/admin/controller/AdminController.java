@@ -6,7 +6,6 @@ import com.example.springsecurity.domain.admin.service.AdminSignUpService;
 import com.example.springsecurity.domain.admin.service.ReadAllUserListService;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
 import com.example.springsecurity.domain.user.dto.UserRequest;
-import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

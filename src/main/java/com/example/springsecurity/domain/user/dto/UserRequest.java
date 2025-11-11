@@ -6,4 +6,5 @@ import lombok.Getter;
 public class UserRequest {
     private String username;
     private String password;
+    private String email;
 }

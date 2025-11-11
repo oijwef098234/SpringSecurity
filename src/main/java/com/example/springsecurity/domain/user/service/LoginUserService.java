@@ -22,6 +22,7 @@ public class LoginUserService {
         User user = userRepository.findByUsername(userRequest.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("해당 사용자 계정이 존재하지 않습니다."));
 
+
     if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
         throw NotMatchedPassword.EXCEPTION;
     }

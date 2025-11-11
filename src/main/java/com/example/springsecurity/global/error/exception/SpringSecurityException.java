@@ -12,5 +12,4 @@ public class SpringSecurityException extends RuntimeException {
         super(errorMessage);
         this.errorCode = errorCode;
     }
-
 }

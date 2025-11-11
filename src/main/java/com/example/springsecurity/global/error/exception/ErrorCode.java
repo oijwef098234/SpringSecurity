@@ -14,7 +14,8 @@ public enum ErrorCode {
     ADMIN_DUPLICATE(409, "이미 존재하는 관리자입니다."),
 
     //user
-    USER_DUPLICATE(409, "이미 존재하는 사용자입니다."),
+    USERNAME_DUPLICATE(409, "이미 존재하는 사용자입니다."),
+    EMAIL_DUPLICATE(409, "이미 가입된 이메일입니다."),
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),

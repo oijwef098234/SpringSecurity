@@ -3,7 +3,8 @@ package com.example.springsecurity.domain.user.service;
 import com.example.springsecurity.domain.user.dto.UserRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
-import com.example.springsecurity.domain.user.exception.DuplicatedUserException;
+import com.example.springsecurity.domain.user.exception.DuplicatedEmailException;
+import com.example.springsecurity.domain.user.exception.DuplicatedUsernameException;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,12 +18,16 @@ public class SignUpUserService {
 
     public void signUpUser(UserRequest userRequest) { // 회원가입
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) { // 사용자가 중복인지 확인
-            throw DuplicatedUserException.EXCEPTION;
+            throw DuplicatedUsernameException.EXCEPTION;
+        }
+        if(userRepository.findByEmail(userRequest.getEmail()).isPresent()) { // 이미 가입된 이메일인지 확인
+            throw DuplicatedEmailException.EXCEPTION;
         }
 
         User user = User.builder() // 사용자 생성
                 .username(userRequest.getUsername())
                 .password(passwordEncoder.encode(userRequest.getPassword())) // 비밀번호 암호화
+                .email(userRequest.getEmail())
                 .role(Roles.USER)
                 .build();
         userRepository.save(user);

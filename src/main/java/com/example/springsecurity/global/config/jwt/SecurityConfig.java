@@ -1,6 +1,5 @@
 package com.example.springsecurity.global.config.jwt;
 
-import com.example.springsecurity.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.example.springsecurity.global.security.jwt.JwtTokenFilter;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +9,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
@@ -29,15 +29,18 @@ public class SecurityConfig {
                 .sessionManagement(session -> session // 세션 사용 설정
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 사용 안함
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/**").permitAll() // 사용자 경로 권한 설정
+                        .requestMatchers("/user/login", "user/sign-up").permitAll() // 사용자 경로 권한 설정
                         .requestMatchers("/admin/sign-up", "/admin/login").permitAll() // 관리자 경로 권한 설정
-                        .requestMatchers("/admin/**").hasRole("ADMIN")) // 관리자 경로 권한 설정
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                        .requestMatchers("/admin/all").hasRole("ADMIN")) // 관리자 경로 권한 설정
                 .addFilterBefore(
                         new JwtTokenFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

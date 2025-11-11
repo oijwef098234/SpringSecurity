@@ -6,12 +6,14 @@ import com.example.springsecurity.domain.user.entity.enums.Roles;
 import com.example.springsecurity.domain.user.exception.DuplicatedUserException;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class SignUpUserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void signUpUser(UserRequest userRequest) { // 회원가입
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) { // 사용자가 중복인지 확인
@@ -20,7 +22,7 @@ public class SignUpUserService {
 
         User user = User.builder() // 사용자 생성
                 .username(userRequest.getUsername())
-                .password(userRequest.getPassword())
+                .password(passwordEncoder.encode(userRequest.getPassword())) // 비밀번호 암호화
                 .role(Roles.USER)
                 .build();
         userRepository.save(user);

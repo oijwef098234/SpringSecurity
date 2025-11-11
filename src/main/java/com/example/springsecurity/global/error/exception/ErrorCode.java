@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),
+    NOT_MATCH_PASSWORD(404, "비밀번호가 일치하지 않습니다."),
     EXPIRED_TOKEN(404, "만료된 토큰입니다.");
 
     private final int statusCode;

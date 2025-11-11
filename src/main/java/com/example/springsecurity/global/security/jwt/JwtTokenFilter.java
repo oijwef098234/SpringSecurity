@@ -33,7 +33,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredTokenException | InvalidTokenException e) {
-            request.setAttribute("jwtError", e);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401로 설정
+            response.setContentType("application/json;charset=UTF-8"); // 응답 형식은 JSON
+            response.getWriter().write("{\"message\": \"" + e.getMessage() + "\"}"); // 에러 메세지 담아서 보내기
+            return;
         }
 
         filterChain.doFilter(request, response);

@@ -1,7 +1,8 @@
 package com.example.springsecurity.domain.user.controller;
 
+import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.service.LoginUserService;
 import com.example.springsecurity.domain.user.service.SignUpUserService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,11 @@ public class UserController {
     private final SignUpUserService signUpUserService;
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody UserRequest userRequest) {
-        return loginUserService.login(userRequest);
+    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+        return loginUserService.login(loginRequest);
     }
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody UserRequest userRequest) {
+    public void signUp(@RequestBody SignUpRequest userRequest) {
         signUpUserService.signUpUser(userRequest);
     }
 }

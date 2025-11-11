@@ -1,7 +1,7 @@
 package com.example.springsecurity.domain.admin.service;
 
 import com.example.springsecurity.domain.admin.exception.DuplicatedAdminException;
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
 import com.example.springsecurity.domain.user.repository.UserRepository;
@@ -15,7 +15,7 @@ public class AdminSignUpService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void signUp(UserRequest userRequest) {
+    public void signUp(SignUpRequest userRequest) {
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) {
             throw DuplicatedAdminException.EXCEPTION;
         }

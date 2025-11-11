@@ -3,8 +3,7 @@ package com.example.springsecurity.domain.user.dto;
 import lombok.Getter;
 
 @Getter
-public class UserRequest {
+public class LoginRequest {
     private String username;
     private String password;
-    private String email;
 }

@@ -2,8 +2,9 @@ package com.example.springsecurity.domain.admin.service;
 
 import com.example.springsecurity.domain.admin.exception.AdminNotfoundException;
 import com.example.springsecurity.domain.admin.exception.NotMatchedPassword;
+import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
@@ -18,15 +19,15 @@ public class AdminLoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public TokenResponse login(UserRequest userRequest) {
-        User user = userRepository.findByUsername(userRequest.getUsername())
+    public TokenResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> AdminNotfoundException.EXCEPTION);
 
-        if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
+        if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw NotMatchedPassword.EXCEPTION;
         }
 
-        return jwtTokenProvider.receiveToken(userRequest.getUsername());
+        return jwtTokenProvider.receiveToken(loginRequest.getUsername());
     }
 
 }

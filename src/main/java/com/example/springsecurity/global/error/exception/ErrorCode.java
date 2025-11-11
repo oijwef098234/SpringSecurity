@@ -15,11 +15,13 @@ public enum ErrorCode {
 
     //user
     USERNAME_DUPLICATE(409, "이미 존재하는 사용자입니다."),
+
+    // auth
+    NOT_MATCH_PASSWORD(400, "아이디 또는 비밀번호를 확인해주세요."),
     EMAIL_DUPLICATE(409, "이미 가입된 이메일입니다."),
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),
-    NOT_MATCH_PASSWORD(400, "비밀번호가 일치하지 않습니다."),
     EXPIRED_TOKEN(404, "만료된 토큰입니다.");
 
     private final int statusCode;

@@ -1,8 +1,9 @@
 package com.example.springsecurity.domain.user.service;
 
 import com.example.springsecurity.domain.admin.exception.NotMatchedPassword;
+import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
@@ -18,14 +19,13 @@ public class LoginUserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public TokenResponse login(UserRequest userRequest) {
-        User user = userRepository.findByUsername(userRequest.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자 계정이 존재하지 않습니다."));
+    public TokenResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("아이디 또는 비밀번호를 확인해주세요."));
 
-
-    if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
-        throw NotMatchedPassword.EXCEPTION;
-    }
-        return jwtTokenProvider.receiveToken(userRequest.getUsername());
-    }
+        if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw NotMatchedPassword.EXCEPTION;
+        }
+            return jwtTokenProvider.receiveToken(loginRequest.getUsername());
+        }
 }

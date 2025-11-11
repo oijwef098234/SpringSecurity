@@ -4,8 +4,9 @@ import com.example.springsecurity.domain.admin.dto.UserResponse;
 import com.example.springsecurity.domain.admin.service.AdminLoginService;
 import com.example.springsecurity.domain.admin.service.AdminSignUpService;
 import com.example.springsecurity.domain.admin.service.ReadAllUserListService;
+import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +26,12 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody UserRequest userRequest) {
-        return adminLoginService.login(userRequest);
+    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+        return adminLoginService.login(loginRequest);
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody UserRequest userRequest) {
+    public void signUp(@RequestBody SignUpRequest userRequest) {
         adminSignUpService.signUp(userRequest);
     }
 }

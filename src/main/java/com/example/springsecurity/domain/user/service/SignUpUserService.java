@@ -1,6 +1,6 @@
 package com.example.springsecurity.domain.user.service;
 
-import com.example.springsecurity.domain.user.dto.UserRequest;
+import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
 import com.example.springsecurity.domain.user.exception.DuplicatedEmailException;
@@ -16,7 +16,7 @@ public class SignUpUserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void signUpUser(UserRequest userRequest) { // 회원가입
+    public void signUpUser(SignUpRequest userRequest) { // 회원가입
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) { // 사용자가 중복인지 확인
             throw DuplicatedUsernameException.EXCEPTION;
         }

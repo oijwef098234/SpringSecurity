@@ -20,7 +20,7 @@ public class LoginUserService {
 
     public TokenResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("아이디 또는 비밀번호를 확인해주세요."));
+                .orElseThrow(() -> NotMatchedUserException.EXCEPTION);
 
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw NotMatchedUserException.EXCEPTION;

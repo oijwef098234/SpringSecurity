@@ -20,14 +20,10 @@ public class SignUpUserService {
         if(userRepository.findByUsername(userRequest.getUsername()).isPresent()) { // 사용자가 중복인지 확인
             throw DuplicatedUsernameException.EXCEPTION;
         }
-        if(userRepository.findByEmail(userRequest.getEmail()).isPresent()) { // 이미 가입된 이메일인지 확인
-            throw DuplicatedEmailException.EXCEPTION;
-        }
 
         User user = User.builder() // 사용자 생성
                 .username(userRequest.getUsername())
                 .password(passwordEncoder.encode(userRequest.getPassword())) // 비밀번호 암호화
-                .email(userRequest.getEmail())
                 .role(Roles.USER)
                 .build();
         userRepository.save(user);

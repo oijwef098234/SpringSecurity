@@ -27,7 +27,7 @@ public class ChangeUserPasswordService {
         if(!passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) { // 비밀번호 확인
             throw NotMatchedPasswordException.EXCEPTION;
         }
-        if(changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmNewPassword())) { // 비밀번호 확인의 확인
+        if(!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmNewPassword())) { // 비밀번호 확인의 확인
             throw NotMatchedNewPasswordException.EXCEPTION;
         }
 

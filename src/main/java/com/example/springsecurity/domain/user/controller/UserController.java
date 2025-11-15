@@ -31,7 +31,7 @@ public class UserController {
         signUpUserService.signUpUser(userRequest);
     }
 
-    @PostMapping("/chage")
+    @PostMapping("/change")
     public void changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, Authentication authentication) {
         changeUserPasswordService.changeUserPassword(changePasswordRequest, authentication);
     }

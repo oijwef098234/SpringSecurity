@@ -19,7 +19,7 @@ public class ChangeUserPasswordService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void changePassword(ChangePasswordRequest changePasswordRequest, Authentication authentication) {
+    public void changeUserPassword(ChangePasswordRequest changePasswordRequest, Authentication authentication) {
         String username = authentication.getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));

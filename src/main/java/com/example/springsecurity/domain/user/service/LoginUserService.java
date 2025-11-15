@@ -1,9 +1,8 @@
 package com.example.springsecurity.domain.user.service;
 
-import com.example.springsecurity.domain.admin.exception.NotMatchedPassword;
+import com.example.springsecurity.domain.admin.exception.NotMatchedUserException;
 import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
@@ -24,7 +23,7 @@ public class LoginUserService {
                 .orElseThrow(() -> new UsernameNotFoundException("아이디 또는 비밀번호를 확인해주세요."));
 
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw NotMatchedPassword.EXCEPTION;
+            throw NotMatchedUserException.EXCEPTION;
         }
             return jwtTokenProvider.receiveToken(loginRequest.getUsername());
         }

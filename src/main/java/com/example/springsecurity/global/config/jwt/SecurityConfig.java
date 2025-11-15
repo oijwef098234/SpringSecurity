@@ -30,6 +30,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 사용 안함
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/login", "user/sign-up").permitAll() // 사용자 경로 권한 설정
+                        .requestMatchers("/user/change").hasRole("USER")
                         .requestMatchers("/admin/sign-up", "/admin/login").permitAll() // 관리자 경로 권한 설정
                         .requestMatchers("/admin/all").hasRole("ADMIN")) // 관리자 경로 권한 설정
                 .addFilterBefore(

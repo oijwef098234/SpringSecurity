@@ -34,4 +34,8 @@ public class User {
     private boolean isExpired;
 
     private boolean isCredentialsExpired;
+
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

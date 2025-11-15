@@ -10,15 +10,18 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
     // admin
-    ADMIN_NOT_FOUND(404, "관리자 계정을 찾을 수 없습니다."),
+    ADMIN_NOT_FOUND(400, "관리자 계정을 찾을 수 없습니다."),
     ADMIN_DUPLICATE(409, "이미 존재하는 관리자입니다."),
 
     //user
     USERNAME_DUPLICATE(409, "이미 존재하는 사용자입니다."),
 
     // auth
-    NOT_MATCH_PASSWORD(400, "아이디 또는 비밀번호를 확인해주세요."),
+    NOT_MATCH_USER(400, "아이디 또는 비밀번호를 확인해주세요."),
     EMAIL_DUPLICATE(409, "이미 가입된 이메일입니다."),
+    NOT_MATCH_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
+    NOT_MATCH_NEW_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
+
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),

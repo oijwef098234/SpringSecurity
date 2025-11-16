@@ -7,6 +7,7 @@ import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.service.ChangeUserPasswordService;
 import com.example.springsecurity.domain.user.service.LoginUserService;
 import com.example.springsecurity.domain.user.service.SignUpUserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +24,8 @@ public class UserController {
     private final ChangeUserPasswordService changeUserPasswordService;
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
-        return loginUserService.login(loginRequest);
+    public TokenResponse login(@RequestBody LoginRequest loginRequest,  HttpServletResponse response) {
+        return loginUserService.login(loginRequest, response);
     }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody SignUpRequest userRequest) {

@@ -54,12 +54,16 @@ public class JwtTokenProvider {
 
                 refreshTokenRepository.save(
                         RefreshToken.builder()
-                                .userId(username)
+                                .username(username)
                                 .token(refreshToken)
                                 .build()
                 );
 
                 return refreshToken;
+    }
+
+    public long getRefreshExpiration() {
+        return jwtProperties.getRefreshExpiration();
     }
 
     public String resolveToken(HttpServletRequest request) { // 토큰 형식확인, 토큰 추출

@@ -46,6 +46,7 @@ public class JwtTokenProvider {
         Date now = new Date();
 
         String refreshToken = Jwts.builder()
+                .setSubject(username)
                 .claim("type", "refresh")
                 .setIssuedAt(now)
                 .setExpiration(new java.sql.Timestamp(now.getTime() + jwtProperties.getRefreshExpiration() * 1000))
@@ -64,6 +65,10 @@ public class JwtTokenProvider {
 
     public long getRefreshExpiration() {
         return jwtProperties.getRefreshExpiration();
+    }
+    public String getUsernameFromToken(String token) {
+        Claims claims = getClaim(token);
+        return claims.getSubject();
     }
 
     public String resolveToken(HttpServletRequest request) { // 토큰 형식확인, 토큰 추출

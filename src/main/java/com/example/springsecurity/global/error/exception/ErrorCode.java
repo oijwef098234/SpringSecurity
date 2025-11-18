@@ -21,6 +21,7 @@ public enum ErrorCode {
     EMAIL_DUPLICATE(409, "이미 가입된 이메일입니다."),
     NOT_MATCH_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
     NOT_MATCH_NEW_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
+    NOT_FOUND_REFRESHTOKEN(400, "다시 로그인해주세요."),
 
 
     // Jwt

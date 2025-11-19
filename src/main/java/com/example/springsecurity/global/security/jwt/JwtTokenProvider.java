@@ -63,14 +63,6 @@ public class JwtTokenProvider {
                 return refreshToken;
     }
 
-    public long getRefreshExpiration() {
-        return jwtProperties.getRefreshExpiration();
-    }
-    public String getUsernameFromToken(String token) {
-        Claims claims = getClaim(token);
-        return claims.getSubject();
-    }
-
     public String resolveToken(HttpServletRequest request) { // 토큰 형식확인, 토큰 추출
         String bearerToken = request.getHeader(jwtProperties.getHeader()); // 여기서 토큰 받아오기
 

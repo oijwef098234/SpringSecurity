@@ -6,5 +6,4 @@ import lombok.Getter;
 public class LoginRequest {
     private String username;
     private String password;
-    private boolean rememberMe;
 }

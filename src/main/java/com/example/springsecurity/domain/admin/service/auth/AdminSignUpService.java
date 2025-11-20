@@ -1,4 +1,4 @@
-package com.example.springsecurity.domain.admin.service;
+package com.example.springsecurity.domain.admin.service.auth;
 
 import com.example.springsecurity.domain.admin.exception.DuplicatedAdminException;
 import com.example.springsecurity.domain.user.dto.SignUpRequest;

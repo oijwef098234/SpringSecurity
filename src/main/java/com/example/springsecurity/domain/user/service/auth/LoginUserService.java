@@ -1,14 +1,12 @@
-package com.example.springsecurity.domain.user.service;
+package com.example.springsecurity.domain.user.service.auth;
 
 import com.example.springsecurity.domain.admin.exception.NotMatchedUserException;
 import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.entity.RefreshToken;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.RefreshTokenRepository;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

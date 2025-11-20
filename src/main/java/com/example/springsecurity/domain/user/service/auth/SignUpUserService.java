@@ -1,9 +1,8 @@
-package com.example.springsecurity.domain.user.service;
+package com.example.springsecurity.domain.user.service.auth;
 
 import com.example.springsecurity.domain.user.dto.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
-import com.example.springsecurity.domain.user.exception.DuplicatedEmailException;
 import com.example.springsecurity.domain.user.exception.DuplicatedUsernameException;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

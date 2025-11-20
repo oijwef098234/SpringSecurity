@@ -1,4 +1,4 @@
-package com.example.springsecurity.domain.admin.service;
+package com.example.springsecurity.domain.admin.service.auth;
 
 import com.example.springsecurity.domain.admin.exception.AdminNotfoundException;
 import com.example.springsecurity.domain.admin.exception.NotMatchedUserException;

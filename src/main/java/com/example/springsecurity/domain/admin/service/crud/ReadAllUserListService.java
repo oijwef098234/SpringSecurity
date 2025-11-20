@@ -1,4 +1,4 @@
-package com.example.springsecurity.domain.admin.service;
+package com.example.springsecurity.domain.admin.service.crud;
 
 import com.example.springsecurity.domain.admin.dto.UserResponse;
 import com.example.springsecurity.domain.user.entity.enums.Roles;

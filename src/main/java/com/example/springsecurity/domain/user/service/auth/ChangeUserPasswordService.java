@@ -1,4 +1,4 @@
-package com.example.springsecurity.domain.user.service;
+package com.example.springsecurity.domain.user.service.auth;
 
 import com.example.springsecurity.domain.user.dto.ChangePasswordRequest;
 import com.example.springsecurity.domain.user.entity.User;

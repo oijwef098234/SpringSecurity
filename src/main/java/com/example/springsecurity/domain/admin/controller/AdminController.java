@@ -1,9 +1,9 @@
 package com.example.springsecurity.domain.admin.controller;
 
 import com.example.springsecurity.domain.admin.dto.UserResponse;
-import com.example.springsecurity.domain.admin.service.AdminLoginService;
-import com.example.springsecurity.domain.admin.service.AdminSignUpService;
-import com.example.springsecurity.domain.admin.service.ReadAllUserListService;
+import com.example.springsecurity.domain.admin.service.crud.ReadAllUserListService;
+import com.example.springsecurity.domain.admin.service.auth.AdminLoginService;
+import com.example.springsecurity.domain.admin.service.auth.AdminSignUpService;
 import com.example.springsecurity.domain.user.dto.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
 import com.example.springsecurity.domain.user.dto.SignUpRequest;

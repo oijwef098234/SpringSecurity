@@ -1,7 +1,7 @@
 package com.example.springsecurity.domain.admin.service.auth;
 
 import com.example.springsecurity.domain.admin.exception.DuplicatedAdminException;
-import com.example.springsecurity.domain.user.dto.SignUpRequest;
+import com.example.springsecurity.domain.user.dto.request.SignUpRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.entity.enums.Roles;
 import com.example.springsecurity.domain.user.repository.UserRepository;

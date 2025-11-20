@@ -1,9 +1,9 @@
-package com.example.springsecurity.domain.user.dto;
+package com.example.springsecurity.domain.user.dto.request;
 
 import lombok.Getter;
 
 @Getter
-public class LoginRequest {
+public class SignUpRequest {
     private String username;
     private String password;
 }

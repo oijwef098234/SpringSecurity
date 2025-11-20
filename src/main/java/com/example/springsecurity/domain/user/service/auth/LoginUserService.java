@@ -1,7 +1,7 @@
 package com.example.springsecurity.domain.user.service.auth;
 
 import com.example.springsecurity.domain.admin.exception.NotMatchedUserException;
-import com.example.springsecurity.domain.user.dto.LoginRequest;
+import com.example.springsecurity.domain.user.dto.request.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.RefreshTokenRepository;

@@ -1,9 +1,9 @@
 package com.example.springsecurity.domain.user.controller;
 
-import com.example.springsecurity.domain.user.dto.ChangePasswordRequest;
-import com.example.springsecurity.domain.user.dto.LoginRequest;
+import com.example.springsecurity.domain.user.dto.request.ChangePasswordRequest;
+import com.example.springsecurity.domain.user.dto.request.LoginRequest;
 import com.example.springsecurity.domain.user.dto.TokenResponse;
-import com.example.springsecurity.domain.user.dto.SignUpRequest;
+import com.example.springsecurity.domain.user.dto.request.SignUpRequest;
 import com.example.springsecurity.domain.user.service.auth.ChangeUserPasswordService;
 import com.example.springsecurity.domain.user.service.auth.LoginUserService;
 import com.example.springsecurity.domain.user.service.auth.SignUpUserService;

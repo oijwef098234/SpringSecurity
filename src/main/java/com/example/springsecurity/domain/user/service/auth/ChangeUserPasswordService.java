@@ -1,6 +1,6 @@
 package com.example.springsecurity.domain.user.service.auth;
 
-import com.example.springsecurity.domain.user.dto.ChangePasswordRequest;
+import com.example.springsecurity.domain.user.dto.request.ChangePasswordRequest;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.exception.NotMatchedNewPasswordException;
 import com.example.springsecurity.domain.user.exception.NotMatchedPasswordException;

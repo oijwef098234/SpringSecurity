@@ -18,25 +18,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public void doFilterInternal(HttpServletRequest request,
-                                 HttpServletResponse response,
-                                 FilterChain filterChain) throws IOException, ServletException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws IOException, ServletException {
 
         String token = jwtTokenProvider.resolveToken(request);
 
-        if (token == null) { // 토큰이 있으면
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        try {
+        if (token != null && !jwtTokenProvider.isTokenExpired(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (ExpiredTokenException | InvalidTokenException e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401로 설정
-            response.setContentType("application/json;charset=UTF-8"); // 응답 형식은 JSON
-            response.getWriter().write("{\"message\": \"" + e.getMessage() + "\"}"); // 에러 메세지 담아서 보내기
-            return;
         }
 
         filterChain.doFilter(request, response);

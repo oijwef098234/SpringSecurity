@@ -111,4 +111,14 @@ public class JwtTokenProvider {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
+
+    public boolean isTokenExpired(String token) {
+        try{
+            Claims claims = getClaim(token);
+
+            return claims.getExpiration().before(new Date());
+        } catch (ExpiredTokenException expiredTokenException){
+            return true;
+        }
+    }
 }

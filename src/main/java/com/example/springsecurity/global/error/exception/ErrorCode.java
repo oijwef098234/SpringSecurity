@@ -22,6 +22,7 @@ public enum ErrorCode {
     NOT_MATCH_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
     NOT_MATCH_NEW_PASSWORD(400, "기존 비밀번호를 확인해주세요."),
     NOT_FOUND_REFRESHTOKEN(400, "다시 로그인해주세요."),
+    USER_NOT_FOUND(400, "해당 유저가 존재하지 않습니다."),
 
 
     // Jwt

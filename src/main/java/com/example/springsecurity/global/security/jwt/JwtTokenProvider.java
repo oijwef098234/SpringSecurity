@@ -1,14 +1,16 @@
 package com.example.springsecurity.global.security.jwt;
 
-import com.example.springsecurity.domain.user.dto.TokenResponse;
+import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.entity.RefreshToken;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.exception.ExpiredTokenException;
 import com.example.springsecurity.domain.user.exception.InvalidTokenException;
+import com.example.springsecurity.domain.user.exception.UserNotFoundException;
 import com.example.springsecurity.domain.user.repository.RefreshTokenRepository;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.auth.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,6 +59,7 @@ public class JwtTokenProvider {
                         RefreshToken.builder()
                                 .username(username)
                                 .token(refreshToken)
+                                .timeToLive(jwtProperties.getRefreshExpiration())
                                 .build()
                 );
 
@@ -83,7 +86,7 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token) // 서명이 유효한지 확인
                     .getBody(); // 만들어서 반환
         }
-        catch (ExpiredTokenException expiredTokenException){ // 만료된 토큰
+        catch (ExpiredJwtException e){ // 만료된 토큰
             throw ExpiredTokenException.EXCEPTION;
         }
         catch (Exception e){ // 검증되지 않은 토큰
@@ -94,8 +97,8 @@ public class JwtTokenProvider {
     public TokenResponse receiveToken(String username) { // 사용자 이름으로 토큰을 발급한다.
         Date now = new Date();
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 사용자 계정이 존재하지 않습니다."));
+        userRepository.findByUsername(username)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
         return TokenResponse
                 .builder()
@@ -110,15 +113,5 @@ public class JwtTokenProvider {
         Claims claims = getClaim(token);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    public boolean isTokenExpired(String token) {
-        try{
-            Claims claims = getClaim(token);
-
-            return claims.getExpiration().before(new Date());
-        } catch (ExpiredTokenException expiredTokenException){
-            return true;
-        }
     }
 }

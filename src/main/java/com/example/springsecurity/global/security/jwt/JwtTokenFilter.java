@@ -1,7 +1,5 @@
 package com.example.springsecurity.global.security.jwt;
 
-import com.example.springsecurity.domain.user.exception.ExpiredTokenException;
-import com.example.springsecurity.domain.user.exception.InvalidTokenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +21,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         String token = jwtTokenProvider.resolveToken(request);
 
-        if (token != null && !jwtTokenProvider.isTokenExpired(token)) {
+        if (token != null) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

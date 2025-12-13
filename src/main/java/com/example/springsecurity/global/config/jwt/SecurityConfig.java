@@ -29,14 +29,10 @@ public class SecurityConfig {
                 .sessionManagement(session -> session // 세션 사용 설정
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 사용 안함
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/login", "/user/sign-up", "/user/change").permitAll() // 사용자 경로 권한 설정
+                        .requestMatchers("/user/login", "/user/sign-up", "/user/change", "/user/reissue").permitAll() // 사용자 경로 권한 설정
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/sign-up", "/admin/login").permitAll() // 관리자 경로 권한 설정
                         .requestMatchers("/admin/all").hasRole("ADMIN")) // 관리자 경로 권한 설정
-                .addFilterBefore(
-                        new JwtTokenFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class
-                )
                 .build();
     }
 

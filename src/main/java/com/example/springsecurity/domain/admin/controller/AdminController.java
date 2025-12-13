@@ -5,7 +5,7 @@ import com.example.springsecurity.domain.admin.service.crud.ReadAllUserListServi
 import com.example.springsecurity.domain.admin.service.auth.AdminLoginService;
 import com.example.springsecurity.domain.admin.service.auth.AdminSignUpService;
 import com.example.springsecurity.domain.user.dto.request.LoginRequest;
-import com.example.springsecurity.domain.user.dto.TokenResponse;
+import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.dto.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

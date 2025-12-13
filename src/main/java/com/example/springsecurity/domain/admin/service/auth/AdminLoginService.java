@@ -3,7 +3,7 @@ package com.example.springsecurity.domain.admin.service.auth;
 import com.example.springsecurity.domain.admin.exception.AdminNotfoundException;
 import com.example.springsecurity.domain.admin.exception.NotMatchedUserException;
 import com.example.springsecurity.domain.user.dto.request.LoginRequest;
-import com.example.springsecurity.domain.user.dto.TokenResponse;
+import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.repository.UserRepository;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;

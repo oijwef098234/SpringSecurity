@@ -11,7 +11,7 @@ spring:
 
 jwt:
   secret: ${SECRET_KEY}
-  access-expiration: 3600
+  access-expiration: 20
   refresh-expiration: 604800
   header: Authorization
   prefix: "Bearer "

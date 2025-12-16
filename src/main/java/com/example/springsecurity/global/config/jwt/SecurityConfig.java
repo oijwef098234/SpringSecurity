@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/login", "/user/sign-up", "/user/change", "/user/reissue").permitAll() // 사용자 경로 권한 설정
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/sign-up", "/admin/login").permitAll() // 관리자 경로 권한 설정
-                        .requestMatchers("/admin/all").hasRole("ADMIN")) // 관리자 경로 권한 설정
+                        .requestMatchers("/admin/**").hasRole("ADMIN")) // 관리자 경로 권한 설정
                 .with(new SecurityFilterConfig(jwtTokenProvider, objectMapper), Customizer.withDefaults())
                 .build();
     }

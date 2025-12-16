@@ -1,6 +1,8 @@
 package com.example.springsecurity.domain.admin.controller;
 
-import com.example.springsecurity.domain.admin.dto.UserResponse;
+import com.example.springsecurity.domain.admin.dto.response.PostResponse;
+import com.example.springsecurity.domain.admin.dto.response.UserResponse;
+import com.example.springsecurity.domain.admin.service.crud.ReadAllPostListService;
 import com.example.springsecurity.domain.admin.service.crud.ReadAllUserListService;
 import com.example.springsecurity.domain.admin.service.auth.AdminLoginService;
 import com.example.springsecurity.domain.admin.service.auth.AdminSignUpService;
@@ -19,10 +21,15 @@ public class AdminController {
     private final ReadAllUserListService readAllUserListService;
     private final AdminLoginService adminLoginService;
     private final AdminSignUpService adminSignUpService;
+    private final ReadAllPostListService readAllPostListService;
 
-    @GetMapping("/all")
+    @GetMapping("/user")
     public List<UserResponse> getAllUsers() {
         return readAllUserListService.findAllUser();
+    }
+    @GetMapping("/post")
+    public List<PostResponse> getAllPosts() {
+        return readAllPostListService.readAllPostList();
     }
 
     @PostMapping("/login")

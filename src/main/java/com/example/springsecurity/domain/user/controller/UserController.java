@@ -10,6 +10,7 @@ import com.example.springsecurity.domain.user.service.auth.LoginUserService;
 import com.example.springsecurity.domain.user.service.auth.ReissueService;
 import com.example.springsecurity.domain.user.service.auth.SignUpUserService;
 import com.example.springsecurity.domain.user.service.crud.CreatePostService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +45,10 @@ public class UserController {
     }
 
     @PatchMapping("/reissue")
-    public TokenResponse reissue(Authentication authentication) {
-        return reissueService.reissue(authentication);
+//    public TokenResponse reissue(Authentication authentication, HttpServletRequest request) { // 만료시간이 다 되어갈때쯤 프론트에서 요청을 보내어 발급받는 reissue 과정
+//        return reissueService.reissue(authentication, request);
+//    }
+    public TokenResponse reissue(@CookieValue("refreshToken") String refreshToken){
+        return reissueService.reissue(refreshToken);
     }
-
 }

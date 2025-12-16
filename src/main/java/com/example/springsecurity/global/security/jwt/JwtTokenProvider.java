@@ -2,7 +2,6 @@ package com.example.springsecurity.global.security.jwt;
 
 import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.entity.RefreshToken;
-import com.example.springsecurity.domain.user.entity.User;
 import com.example.springsecurity.domain.user.exception.ExpiredTokenException;
 import com.example.springsecurity.domain.user.exception.InvalidTokenException;
 import com.example.springsecurity.domain.user.exception.UserNotFoundException;
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -78,7 +76,7 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public Claims getClaim(String token) { // 토큰 검증
+    public Claims getClaim(String token) { // 토큰 검증후 claim객체 추출
         try{
             return Jwts
                     .parser() // 토큰을 분석하고 해석할 수 있는 객체 생성
@@ -90,6 +88,17 @@ public class JwtTokenProvider {
             throw ExpiredTokenException.EXCEPTION;
         }
         catch (Exception e){ // 검증되지 않은 토큰
+            throw InvalidTokenException.EXCEPTION;
+        }
+    }
+    public void validateToken(String token) { // 토큰 검증
+        try {
+            Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecret())
+                    .parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            throw ExpiredTokenException.EXCEPTION;
+        } catch (Exception e) {
             throw InvalidTokenException.EXCEPTION;
         }
     }

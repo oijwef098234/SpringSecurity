@@ -1,10 +1,11 @@
 package com.example.springsecurity.global.config.jwt;
 
-import com.example.springsecurity.global.security.jwt.JwtTokenFilter;
 import com.example.springsecurity.global.security.jwt.JwtTokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
@@ -12,12 +13,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
@@ -33,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/admin/sign-up", "/admin/login").permitAll() // 관리자 경로 권한 설정
                         .requestMatchers("/admin/all").hasRole("ADMIN")) // 관리자 경로 권한 설정
+                .with(new SecurityFilterConfig(jwtTokenProvider, objectMapper), Customizer.withDefaults())
                 .build();
     }
 

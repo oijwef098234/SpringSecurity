@@ -27,7 +27,10 @@ public enum ErrorCode {
 
     // Jwt
     INVALID_TOKEN(401, "검증 되지 않은 토큰 입니다."),
-    EXPIRED_TOKEN(404, "만료된 토큰입니다.");
+    EXPIRED_TOKEN(404, "만료된 토큰입니다."),
+
+    BAD_REQUEST(400, "프론트 탓"),
+    INTERNAL_SERVER_ERROR(500, "서버 탓");
 
     private final int statusCode;
     private final String errorMessage;

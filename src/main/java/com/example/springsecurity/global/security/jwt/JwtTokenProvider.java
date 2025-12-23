@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -53,8 +54,16 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
                 .compact();
 
+//                refreshTokenRepository.save( // refreshToken, accessToken을 둘 다 주는 방식에서 사용
+//                        RefreshToken.builder()
+//                                .username(username)
+//                                .token(refreshToken)
+//                                .timeToLive(jwtProperties.getRefreshExpiration())
+//                                .build()
+//                );
                 refreshTokenRepository.save(
                         RefreshToken.builder()
+                                .sessionId(UUID.randomUUID().toString())
                                 .username(username)
                                 .token(refreshToken)
                                 .timeToLive(jwtProperties.getRefreshExpiration())

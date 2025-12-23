@@ -2,6 +2,7 @@ package com.example.springsecurity.domain.user.controller;
 
 import com.example.springsecurity.domain.user.dto.request.ChangePasswordRequest;
 import com.example.springsecurity.domain.user.dto.request.LoginRequest;
+import com.example.springsecurity.domain.user.dto.response.TokenAndSessionResponse;
 import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.dto.request.PostRequest;
 import com.example.springsecurity.domain.user.dto.request.SignUpRequest;
@@ -11,7 +12,10 @@ import com.example.springsecurity.domain.user.service.auth.ReissueService;
 import com.example.springsecurity.domain.user.service.auth.SignUpUserService;
 import com.example.springsecurity.domain.user.service.crud.CreatePostService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +30,14 @@ public class UserController {
     private final ChangeUserPasswordService changeUserPasswordService;
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
-        return loginUserService.login(loginRequest);
+    public ResponseEntity<TokenAndSessionResponse> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        TokenAndSessionResponse tokenAndSessionResponse = loginUserService.login(loginRequest);
+
+        response.addHeader("Set-Cookie", tokenAndSessionResponse.getSessionId());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenAndSessionResponse.getToken())
+                .build();
     }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody SignUpRequest userRequest) {

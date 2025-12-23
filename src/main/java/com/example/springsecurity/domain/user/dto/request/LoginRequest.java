@@ -6,4 +6,5 @@ import lombok.Getter;
 public class LoginRequest {
     private String username;
     private String password;
+    private boolean rememberMe; // 자동로그인
 }

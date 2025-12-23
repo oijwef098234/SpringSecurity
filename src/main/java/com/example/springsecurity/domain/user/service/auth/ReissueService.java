@@ -23,7 +23,7 @@ public class ReissueService {
         jwtTokenProvider.validateToken(jwtTokenProvider.resolveToken(request));
         return jwtTokenProvider.receiveToken(authentication.getName());
     }
-//
+
 //    public TokenResponse reissue(String refreshToken) { // 만료가되었을때 프론트에서 잡아 refreshToken과 함께 reissue 요청을 보낼때 사용
 //        jwtTokenProvider.validateToken(refreshToken); // 토큰 검증
 //

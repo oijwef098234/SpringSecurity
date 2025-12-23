@@ -13,10 +13,22 @@ import org.springframework.data.redis.core.index.Indexed;
 @AllArgsConstructor
 public class RefreshToken {
 
-    @Id
-    private String username;
+//    @Id // accessToken과 refreshToken을 둘 다 주는 방식에서 사용
+//    private String username;
+//
+//    @Indexed
+//    private String token;
+//
+//    @TimeToLive
+//    private Long timeToLive;
+
+    @Id // accessToken만 주는 방식에서 사용
+    private String sessionId;
 
     @Indexed
+    private String username;
+
+
     private String token;
 
     @TimeToLive

@@ -7,11 +7,16 @@ import com.example.springsecurity.domain.admin.service.crud.ReadAllUserListServi
 import com.example.springsecurity.domain.admin.service.auth.AdminLoginService;
 import com.example.springsecurity.domain.admin.service.auth.AdminSignUpService;
 import com.example.springsecurity.domain.user.dto.request.LoginRequest;
+import com.example.springsecurity.domain.user.dto.response.TokenAndSessionResponse;
 import com.example.springsecurity.domain.user.dto.response.TokenResponse;
 import com.example.springsecurity.domain.user.dto.request.SignUpRequest;
 import com.example.springsecurity.domain.user.service.auth.ReissueService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,10 +42,34 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
-        return adminLoginService.login(loginRequest);
-    }
+    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        TokenAndSessionResponse tokenAndSessionResponse = adminLoginService.login(loginRequest);
 
+        if(loginRequest.isRememberMe()) {
+            ResponseCookie responseCookie = ResponseCookie.from("SESSION_ID", tokenAndSessionResponse.getSessionId())
+                    .httpOnly(true)
+                    .secure(false) // http통신에서만 사용, local에서는 false
+                    .sameSite("Lax")
+                    .path("/")
+                    .maxAge(60 * 60 * 24 * 30)
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
+        } else {
+            ResponseCookie responseCookie = ResponseCookie.from("SESSION_ID", tokenAndSessionResponse.getSessionId())
+                    .httpOnly(true)
+                    .secure(true)
+                    .sameSite("Lax")
+                    .path("/")
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, responseCookie.toString());
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenAndSessionResponse.getToken())
+                .build();
+    }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody SignUpRequest userRequest) {
         adminSignUpService.signUp(userRequest);

@@ -41,9 +41,10 @@ public class LoginUserService {
             throw NotMatchedUserException.EXCEPTION;
         }
 
+        jwtTokenProvider.receiveToken(loginRequest.getUsername());
+
         RefreshToken refreshToken = refreshTokenRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> NotMatchedUserException.EXCEPTION);
-
 
         return TokenAndSessionResponse.builder()
                 .token(jwtTokenProvider.receiveToken(loginRequest.getUsername()).getAccessToken())
